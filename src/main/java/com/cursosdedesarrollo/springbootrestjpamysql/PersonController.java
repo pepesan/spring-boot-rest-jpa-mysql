@@ -8,33 +8,33 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/persons")
 public class PersonController {
 
     @Autowired
     PersonRepository personRepository;
 
     // Get All Persons
-    @GetMapping("/persons")
+    @GetMapping
     public List<Person> getAllPersons() {
         return personRepository.findAll();
     }
 
     // Create a new Person
-    @PostMapping("/persons")
+    @PostMapping
     public Person createPerson(@Valid @RequestBody Person person) {
         return personRepository.save(person);
     }
 
     // Get a Single Person
-    @GetMapping("/persons/{id}")
+    @GetMapping("/{id}")
     public Person getPersonById(@PathVariable(value = "id") Long personId) {
         return personRepository.findById(personId)
                 .orElseThrow(() -> new ResourceNotFoundException("person", "id", personId));
     }
 
     // Update a person
-    @PutMapping("/persons/{id}")
+    @PutMapping("/{id}")
     public Person updateperson(@PathVariable(value = "id") Long personId,
                            @Valid @RequestBody Person personDetails) {
 
@@ -51,7 +51,7 @@ public class PersonController {
     }
 
     // Delete a person
-    @DeleteMapping("/persons/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteperson(@PathVariable(value = "id") Long personId) {
         Person person = personRepository.findById(personId)
                 .orElseThrow(() -> new ResourceNotFoundException("person", "id", personId));

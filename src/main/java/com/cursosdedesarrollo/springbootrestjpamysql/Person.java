@@ -1,9 +1,11 @@
 package com.cursosdedesarrollo.springbootrestjpamysql;
 
+import lombok.NonNull;
 import lombok.Setter;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.Past;
 import java.sql.Date;
 
 /**
@@ -21,10 +23,12 @@ public class Person {
 
     @Column(name = "creation_time", nullable = false)
     @Setter
+    @Past
     private Date creationTime;
 
     @Column(name = "first_name", nullable = false)
     @Setter
+    @NonNull
     private String firstName;
 
     @Column(name = "last_name", nullable = false)

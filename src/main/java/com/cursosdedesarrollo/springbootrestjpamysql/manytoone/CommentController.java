@@ -24,6 +24,7 @@ public class CommentController {
         return commentRepository.findByPostId(postId, pageable);
     }
 
+    //TODO: Revisar el envío de comentarios
     @PostMapping("/posts/{postId}/comments")
     public Comment createComment(@PathVariable (value = "postId") Long postId,
                                  @Valid @RequestBody Comment comment) {

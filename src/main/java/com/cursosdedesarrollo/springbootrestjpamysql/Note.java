@@ -24,7 +24,6 @@ public class Note implements Serializable {
     @NotBlank
     private String title;
 
-    @NotBlank
     private String content;
 
     @Column(nullable = false, updatable = false)

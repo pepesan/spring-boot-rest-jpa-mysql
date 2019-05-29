@@ -7,33 +7,33 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/notes")
 public class NoteController {
 
     @Autowired
     NoteRepository noteRepository;
 
     // Get All Notes
-    @GetMapping("/notes")
+    @GetMapping
     public List<Note> getAllNotes() {
         return noteRepository.findAll();
     }
 
     // Create a new Note
-    @PostMapping("/notes")
+    @PostMapping
     public Note createNote(@Valid @RequestBody Note note) {
         return noteRepository.save(note);
     }
 
     // Get a Single Note
-    @GetMapping("/notes/{id}")
+    @GetMapping("/{id}")
     public Note getNoteById(@PathVariable(value = "id") Long noteId) {
         return noteRepository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
     }
 
     // Update a Note
-    @PutMapping("/notes/{id}")
+    @PutMapping("/{id}")
     public Note updateNote(@PathVariable(value = "id") Long noteId,
                            @Valid @RequestBody Note noteDetails) {
 
@@ -46,9 +46,26 @@ public class NoteController {
         Note updatedNote = noteRepository.save(note);
         return updatedNote;
     }
+    // Update a Note pero sólo en aquellos campos que nos mandan
+    @PatchMapping("/{id}")
+    public Note patchNote(@PathVariable(value = "id") Long noteId,
+                           @Valid @RequestBody Note noteDetails) {
+
+        Note note = noteRepository.findById(noteId)
+                .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
+
+        if(noteDetails.getTitle()!=null && noteDetails.getTitle().equals("")){
+            note.setTitle(noteDetails.getTitle());
+        }
+        if(noteDetails.getContent()!=null && noteDetails.getContent().equals("")){
+            note.setContent(noteDetails.getContent());
+        }
+        Note updatedNote = noteRepository.save(note);
+        return updatedNote;
+    }
 
     // Delete a Note
-    @DeleteMapping("/notes/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long noteId) {
         Note note = noteRepository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));

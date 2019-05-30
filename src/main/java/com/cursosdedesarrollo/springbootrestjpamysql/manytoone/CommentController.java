@@ -30,7 +30,10 @@ public class CommentController {
                                  @Valid @RequestBody Comment comment) {
         return postRepository.findById(postId).map(post -> {
             comment.setPost(post);
-            return commentRepository.save(comment);
+            //post.getComments().add(comment);
+            commentRepository.save(comment);
+            //postRepository.save(post);
+            return comment;
         }).orElseThrow(() -> new ResourceNotFoundException("PostId " + postId + " not found"));
     }
 

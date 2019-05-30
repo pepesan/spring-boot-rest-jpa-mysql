@@ -1,5 +1,8 @@
 package com.cursosdedesarrollo.springbootrestjpamysql.manytoone;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -29,10 +32,10 @@ public class Post{
     @Lob
     private String content;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "post")
     private Set<Comment> comments = new HashSet<>();
 
-    // Getters and Setters (Omitted for brevity)
 }

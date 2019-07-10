@@ -14,5 +14,5 @@ public interface PersonService {
      *          returns an empty list.
      * @throws IllegalArgumentException if search type is not given.
      */
-    public List<Person> search(PersonSearchDTO searchCriteria);
+    public List<Person>  search(PersonSearchDTO searchCriteria);
 }

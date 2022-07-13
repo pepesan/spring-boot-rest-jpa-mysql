@@ -1,5 +1,6 @@
 package com.cursosdedesarrollo.springbootrestjpamysql.onetoone;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -35,9 +36,8 @@ public class User implements Serializable {
     @Size(max = 128)
     private String password;
 
-    @OneToOne(fetch = FetchType.LAZY,
-            cascade =  CascadeType.ALL,
-            mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private UserProfile userProfile;
 
 }

@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.AUTO;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -16,10 +18,10 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name = "category", catalog = "test")
+@Table(name = "category")
 public class Category implements java.io.Serializable {
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = AUTO)
     @Column(name = "CATEGORY_ID", unique = true, nullable = false)
     private Integer categoryId;
     @Column(name = "NAME", nullable = false, length = 10)

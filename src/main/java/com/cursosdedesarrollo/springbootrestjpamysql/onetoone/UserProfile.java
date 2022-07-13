@@ -1,5 +1,7 @@
 package com.cursosdedesarrollo.springbootrestjpamysql.onetoone;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -45,7 +47,8 @@ public class UserProfile implements Serializable {
     @Size(max = 32)
     private String zipCode;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 }

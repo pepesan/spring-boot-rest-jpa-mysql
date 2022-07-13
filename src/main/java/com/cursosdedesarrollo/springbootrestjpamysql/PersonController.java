@@ -1,6 +1,7 @@
 package com.cursosdedesarrollo.springbootrestjpamysql;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,8 +12,12 @@ import java.util.List;
 @RequestMapping("/api")
 public class PersonController {
 
-    @Autowired
+
     PersonRepository personRepository;
+    @Autowired
+    PersonController(PersonRepository personRepository){
+        this.personRepository = personRepository;
+    }
 
     // Get All Persons
     @GetMapping("/persons")
@@ -31,6 +36,13 @@ public class PersonController {
     public Person getPersonById(@PathVariable(value = "id") Long personId) {
         return personRepository.findById(personId)
                 .orElseThrow(() -> new ResourceNotFoundException("person", "id", personId));
+    }
+    @GetMapping("/persons/{id}/entity")
+    public ResponseEntity<Person> getPersonByIdEntity(@PathVariable(value = "id") Long personId) {
+        Person p = personRepository.findById(personId)
+                .orElseThrow(() -> new ResourceNotFoundException("person", "id", personId));
+
+        return new ResponseEntity<Person>(p, HttpStatus.ACCEPTED);
     }
 
     // Update a person
